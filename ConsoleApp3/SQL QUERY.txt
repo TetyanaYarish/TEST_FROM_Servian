@@ -2,3 +2,105 @@
 FROM person P, call_trxn c
 WHERE P.ID =C.P_ID
 GROUP BY P.ID, p.NAME
+
+
+namespace Game
+{
+    public class Game
+    {
+        int attempts = 0;
+        int[] correctNumber = new int[4];
+        public void RandomNumberGenerator()
+        {
+            // Generate a random 4-digit number made up of unique digits
+           
+            Random rand = new Random();
+            for (int i = 0; i < 4; i++)
+            {
+                correctNumber[i] = rand.Next(0, 9);
+                var number = correctNumber[i];
+
+                for (int j = 0; j < i; j++)
+                {
+                    if (correctNumber[i] == correctNumber[j])
+                    {
+                        i--;
+
+                        break;
+                    }
+                }
+
+            }
+        }
+        public void RunningGame()
+        {
+            while (true)
+            {
+                // Get the user's guess
+                Console.Write("Enter a 4-digit number made up of unique digits: ");
+                int[] guess = Console.ReadLine().Select(x => x - '0').ToArray();
+                attempts++;
+
+                // Check if the guess is correct
+                if (guess.SequenceEqual(correctNumber))
+                {
+                    Console.WriteLine("Congratulations, you guessed the number in " + attempts + " attempts!");
+                    break;
+                }
+
+                // Check how many digits are in the correct position
+                int correctPositions = 0;
+                for (int i = 0; i < 4; i++)
+                {
+                    if (guess[i] == correctNumber[i])
+                    {
+                        correctPositions++;
+                    }
+                }
+                Console.WriteLine(correctPositions + " digits in correct position.");
+
+                // Check how many digits are in the incorrect position
+                int correctDigits = 0;
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        if (guess[i] == correctNumber[j] && i != j)
+                        {
+                            correctDigits++;
+                        }
+                    }
+                }
+                Console.WriteLine(correctDigits + " digits in incorrect position.");
+            }
+        }
+    }
+}
+
+****************
+
+ static void Main(string[] args)
+    {
+        Game game = new Game();
+        Console.WriteLine("\t\tWelcome to my MATH game!");
+        bool gameContinue = true;
+        Console.WriteLine("\tWould you like to run game?\n\tYES-1, NO-2");
+        string answer = Console.ReadLine();
+
+        do
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            game.RandomNumberGenerator();
+            game.RunningGame();
+            Console.WriteLine("\tWould you like to run game again? \n\tYES-1, NO-2");
+            answer = Console.ReadLine();
+        }
+        while (answer != "2");
+        Console.BackgroundColor.CompareTo(Console.ForegroundColor);
+        Console.ResetColor();
+        Console.WriteLine("\tTHANK YOU AND I HOPE SEE YOU SOON!");
+        Console.ReadKey();
+       
+    }
+}
+
