@@ -84,7 +84,7 @@ namespace Game
         Game game = new Game();
         Console.WriteLine("\t\tWelcome to my MATH game!");
         bool gameContinue = true;
-        Console.WriteLine("\tWould you like to run game?\n\tYES-1, NO-2");
+        Console.WriteLine("\tWould you like to run the game?\n\tYES-1, NO-2");
         string answer = Console.ReadLine();
 
         do
